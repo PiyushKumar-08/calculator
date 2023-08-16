@@ -1,0 +1,80 @@
+#calculator
+
+import tkinter as Tk
+from tkinter import *
+
+win = Tk()
+win.title('Calc')
+
+mainframe = Frame(win, width=300, bd=20, relief=RIDGE, bg="lightgray")
+mainframe.pack()
+
+e = Entry(mainframe, width=20, borderwidth=5, font=('Arial', 20))
+e.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
+
+def onclick(num):
+    x = e.get()
+    e.delete(0, END)
+    e.insert(0, str(x) + str(num))
+    
+def clear():
+    e.delete(0, END)
+    
+def add():
+    global first, op
+    op = '+'
+    first = e.get()
+    e.delete(0, END)
+    
+def sub():
+    global first, op
+    op = '-'
+    first = e.get()
+    e.delete(0, END)
+
+def mul():
+    global first, op
+    op = '*'
+    first = e.get()
+    e.delete(0, END)
+
+def div():
+    global first, op
+    op = '/'
+    first = e.get()
+    e.delete(0, END)
+
+def equal():
+    second = e.get()
+    if op == '+':
+        result = float(first) + float(second)
+    elif op == '-':
+        result = float(first) - float(second)
+    elif op == '*':
+        result = float(first) * float(second)
+    elif op == '/':
+        result = float(first) / float(second)
+    e.delete(0, END)
+    e.insert(0, result)
+
+def create_button(text, bg, fg, command, row, column, width=10, height=2):
+    return Button(mainframe, text=text, bg=bg, fg=fg, relief=RIDGE, font=('Arial', 20), width=width, height=height, command=command).grid(row=row, column=column)
+
+create_button('7', 'lightgray', 'black', lambda: onclick(7), 1, 0)
+create_button('8', 'lightgray', 'black', lambda: onclick(8), 1, 1)
+create_button('9', 'lightgray', 'black', lambda: onclick(9), 1, 2)
+create_button('/', 'lightblue', 'white', div, 1, 3)
+create_button('4', 'lightgray', 'black', lambda: onclick(4), 2, 0)
+create_button('5', 'lightgray', 'black', lambda: onclick(5), 2, 1)
+create_button('6', 'lightgray', 'black', lambda: onclick(6), 2, 2)
+create_button('*', 'lightblue', 'white', mul, 2, 3)
+create_button('1', 'lightgray', 'black', lambda: onclick(1), 3, 0)
+create_button('2', 'lightgray', 'black', lambda: onclick(2), 3, 1)
+create_button('3', 'lightgray', 'black', lambda: onclick(3), 3, 2)
+create_button('-', 'lightblue', 'white', sub, 3, 3)
+create_button('0', 'lightgray', 'black', lambda: onclick(0), 4, 0)
+create_button('C', 'red', 'white', clear, 4, 1)
+create_button('=', 'green', 'white', equal, 4, 2)
+create_button('+', 'lightblue', 'white', add, 4, 3)
+
+win.mainloop()
